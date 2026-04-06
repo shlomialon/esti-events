@@ -8,194 +8,73 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet" />
-  <style>
-    :root{--pink:#f472b6;--pink-light:#fce7f3;--pink-dark:#db2777;--purple:#a855f7;--purple-dark:#7c3aed;--blue:#38bdf8;--blue-dark:#0284c7;--yellow:#fbbf24;--cream:#fffbf5;--dark:#1e1b2e;--gray:#6b7280;--radius:20px;--radius-lg:28px}
-    *{margin:0;padding:0;box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{font-family:'Heebo',sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden;line-height:1.6}
-
-    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
-    @keyframes floatR{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px) rotate(-2deg)}}
-    @keyframes pulse{0%,100%{box-shadow:0 4px 12px rgba(244,114,182,.4)}50%{box-shadow:0 4px 30px rgba(244,114,182,.7)}}
-    @keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
-    @keyframes scaleIn{0%{transform:scale(.8);opacity:0}100%{transform:scale(1);opacity:1}}
-    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-    @keyframes gradShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-    @keyframes blob{0%,100%{border-radius:60% 40% 30% 70%/60% 30% 70% 40%}50%{border-radius:30% 60% 70% 40%/50% 60% 30% 60%}}
-
-    /* NAV */
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(219,39,119,.08);padding:12px 28px;display:flex;align-items:center;justify-content:space-between;transition:all .3s}
-    nav.scrolled{padding:8px 28px;box-shadow:0 4px 30px rgba(0,0,0,.08)}
-    .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-    .nav-logo svg{height:42px;width:auto}
-    .nav-links{display:flex;align-items:center;gap:24px}
-    .nav-link{text-decoration:none;color:var(--dark);font-weight:500;font-size:.95rem;transition:color .2s;position:relative}
-    .nav-link::after{content:'';position:absolute;bottom:-4px;right:0;width:0;height:2px;background:linear-gradient(90deg,var(--pink-dark),var(--purple));transition:width .3s;border-radius:2px}
-    .nav-link:hover{color:var(--pink-dark)}
-    .nav-link:hover::after{width:100%}
-    .nav-phone{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--pink-dark),var(--purple));color:#fff;text-decoration:none;padding:10px 22px;border-radius:50px;font-weight:700;font-size:.9rem;box-shadow:0 4px 15px rgba(219,39,119,.3);transition:transform .2s,box-shadow .2s}
-    .nav-phone:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 6px 25px rgba(219,39,119,.45)}
-    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
-    .hamburger span{width:26px;height:3px;background:var(--dark);border-radius:3px;transition:all .3s}
-
-    /* HERO */
-    .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;position:relative;overflow:hidden;background:linear-gradient(160deg,#fff0f9,#f0e6ff 30%,#e0f2fe 60%,#fef9c3);background-size:300% 300%;animation:gradShift 12s ease infinite}
-    .hero-blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.3;pointer-events:none}
-    .hero-blob-1{top:-80px;right:-60px;width:420px;height:420px;background:var(--pink);animation:blob 8s ease-in-out infinite,float 6s ease-in-out infinite}
-    .hero-blob-2{bottom:-100px;left:-80px;width:360px;height:360px;background:var(--blue);animation:blob 10s ease-in-out infinite reverse,floatR 7s ease-in-out infinite}
-    .hero-blob-3{top:40%;left:50%;width:280px;height:280px;background:var(--purple);opacity:.15;animation:blob 12s ease-in-out infinite}
-    .hero-deco{position:absolute;pointer-events:none;opacity:.15}
-    .hero-deco-1{top:18%;right:8%;font-size:3rem;animation:float 5s ease-in-out infinite}
-    .hero-deco-2{top:30%;left:6%;font-size:2.5rem;animation:floatR 7s ease-in-out infinite}
-    .hero-deco-3{bottom:20%;right:12%;font-size:2rem;animation:float 6s ease-in-out infinite 1s}
-    .hero-deco-4{bottom:30%;left:10%;font-size:2.2rem;animation:floatR 5.5s ease-in-out infinite .5s}
-    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.85);backdrop-filter:blur(10px);color:var(--pink-dark);padding:8px 24px;border-radius:50px;font-size:.95rem;font-weight:700;margin-bottom:24px;border:2px solid rgba(219,39,119,.15);box-shadow:0 4px 20px rgba(244,114,182,.15);animation:scaleIn .6s ease forwards,pulse 3s ease-in-out infinite .6s;position:relative;z-index:1}
-    .hero h1{font-family:'Rubik',sans-serif;font-weight:900;font-size:clamp(2.8rem,9vw,5.5rem);line-height:1.08;margin-bottom:20px;position:relative;z-index:1;animation:scaleIn .8s ease forwards}
-    .hero h1 span{background:linear-gradient(135deg,var(--pink-dark),var(--purple-dark),var(--blue-dark));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s linear infinite}
-    .hero-sub{font-size:clamp(1.05rem,3vw,1.3rem);color:var(--gray);margin-bottom:40px;max-width:540px;line-height:1.7;position:relative;z-index:1;animation:scaleIn 1s ease forwards}
-    .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;position:relative;z-index:1;animation:scaleIn 1.2s ease forwards}
-    .btn-primary{background:linear-gradient(135deg,var(--pink-dark),var(--purple));color:#fff;padding:16px 36px;border-radius:50px;text-decoration:none;font-weight:700;font-size:1.05rem;box-shadow:0 6px 25px rgba(219,39,119,.35);transition:transform .3s,box-shadow .3s;display:inline-flex;align-items:center;gap:8px;position:relative;overflow:hidden}
-    .btn-primary::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:left .5s}
-    .btn-primary:hover::before{left:100%}
-    .btn-primary:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 12px 35px rgba(219,39,119,.45)}
-    .btn-wa{background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;padding:16px 36px;border-radius:50px;text-decoration:none;font-weight:700;font-size:1.05rem;box-shadow:0 6px 25px rgba(37,211,102,.35);transition:transform .3s,box-shadow .3s;display:inline-flex;align-items:center;gap:8px}
-    .btn-wa:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 12px 35px rgba(37,211,102,.45)}
-
-    /* TRUST */
-    .trust-bar{background:#fff;padding:28px 20px;display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap;box-shadow:0 2px 20px rgba(0,0,0,.04);position:relative;z-index:2}
-    .trust-item{display:flex;align-items:center;gap:10px;font-weight:600;font-size:.95rem}
-    .trust-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
-    .trust-icon.pk{background:var(--pink-light)}.trust-icon.bl{background:#dbeafe}.trust-icon.yl{background:#fef3c7}.trust-icon.pr{background:#f3e8ff}
-
-    /* PHOTO STRIP */
-    .photo-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:60px 20px;max-width:1060px;margin:0 auto}
-    .ps-item{position:relative;border-radius:var(--radius-lg);overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.1);aspect-ratio:3/4}
-    .ps-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.25,.46,.45,.94)}
-    .ps-item:hover img{transform:scale(1.08)}
-    .ps-item::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(30,27,46,.4) 0%,transparent 50%);pointer-events:none;opacity:0;transition:opacity .4s}
-    .ps-item:hover::after{opacity:1}
-    .ps-item:nth-child(2){margin-top:40px}
-    .ps-label{position:absolute;bottom:16px;right:16px;left:16px;color:#fff;font-weight:700;font-size:1rem;z-index:2;opacity:0;transform:translateY(10px);transition:all .4s}
-    .ps-item:hover .ps-label{opacity:1;transform:translateY(0)}
-
-    /* SECTION TITLE */
-    .stitle{text-align:center;padding:20px 24px 10px}
-    .stitle h2{font-family:'Rubik',sans-serif;font-weight:900;font-size:clamp(1.9rem,5vw,3rem)}
-    .stitle h2 span{background:linear-gradient(135deg,var(--pink-dark),var(--purple-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .stitle p{color:var(--gray);margin-top:10px;font-size:1.05rem}
-    .tline{width:70px;height:4px;background:linear-gradient(90deg,var(--pink-dark),var(--purple),var(--blue));border-radius:2px;margin:14px auto 0}
-
-    /* SERVICES */
-    .services{padding:30px 20px 80px;max-width:1100px;margin:0 auto}
-    .srv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:44px}
-    .srv-card{background:#fff;border-radius:var(--radius-lg);overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.06);transition:transform .4s cubic-bezier(.25,.46,.45,.94),box-shadow .4s;position:relative;border:1px solid rgba(0,0,0,.04)}
-    .srv-card:hover{transform:translateY(-10px);box-shadow:0 20px 50px rgba(0,0,0,.12)}
-    .srv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--pink-dark),var(--purple),var(--blue));opacity:0;transition:opacity .3s}
-    .srv-card:hover::before{opacity:1}
-    .srv-img-wrap{position:relative;overflow:hidden;height:220px}
-    .srv-img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.25,.46,.45,.94)}
-    .srv-card:hover .srv-img{transform:scale(1.08)}
-    .srv-emoji{font-size:3.5rem;height:220px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--pink-light),#f3e8ff,#dbeafe)}
-    .srv-body{padding:24px}
-    .srv-body h3{font-family:'Rubik',sans-serif;font-weight:700;font-size:1.2rem;margin-bottom:10px}
-    .srv-body p{font-size:.92rem;color:var(--gray);line-height:1.65}
-    .srv-tag{position:absolute;top:14px;right:14px;background:linear-gradient(135deg,var(--pink-dark),var(--purple));color:#fff;padding:6px 16px;border-radius:50px;font-size:.8rem;font-weight:700;z-index:3;box-shadow:0 4px 12px rgba(219,39,119,.3)}
-
-    /* EVENTS */
-    .events-section{background:linear-gradient(135deg,#fdf2f8,#f3e8ff,#eff6ff);padding:80px 20px;position:relative;overflow:hidden}
-    .events-chips{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:36px}
-    .chip{background:#fff;border:2px solid var(--pink-light);padding:14px 28px;border-radius:50px;font-weight:600;font-size:1rem;display:flex;align-items:center;gap:10px;box-shadow:0 4px 16px rgba(0,0,0,.06);transition:all .3s;cursor:default}
-    .chip:hover{transform:translateY(-4px) scale(1.05);box-shadow:0 8px 28px rgba(219,39,119,.12);border-color:var(--pink)}
-
-    /* GALLERY */
-    .gallery-section{padding:80px 20px;max-width:1100px;margin:0 auto}
-    .gal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px}
-    .gal-item{border-radius:var(--radius-lg);overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.08);transition:transform .4s cubic-bezier(.25,.46,.45,.94),box-shadow .4s;position:relative;cursor:pointer}
-    .gal-item:hover{transform:scale(1.03) translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.15);z-index:2}
-    .gal-item img{width:100%;height:240px;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.25,.46,.45,.94)}
-    .gal-item:hover img{transform:scale(1.1)}
-    .gal-item.tall img{height:360px}
-    .gal-item.span2{grid-column:span 2}
-    .gal-item.span2 img{height:280px}
-    .gal-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(30,27,46,.6) 0%,transparent 60%);display:flex;align-items:flex-end;padding:20px;opacity:0;transition:opacity .4s}
-    .gal-item:hover .gal-ov{opacity:1}
-    .gal-ov span{color:#fff;font-weight:700;font-size:1rem}
-
-    /* STATS */
-    .stats-section{background:linear-gradient(160deg,var(--dark),#2d1b4e);padding:70px 20px;color:#fff;position:relative;overflow:hidden}
-    .stats-section::before{content:'';position:absolute;top:-40%;left:-20%;width:500px;height:500px;background:radial-gradient(circle,rgba(168,85,247,.15),transparent 70%);border-radius:50%;animation:float 10s ease-in-out infinite}
-    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:30px;max-width:900px;margin:0 auto;position:relative;z-index:1}
-    .stat-card{text-align:center;padding:30px 20px;border-radius:var(--radius);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(10px);transition:transform .3s,background .3s}
-    .stat-card:hover{transform:translateY(-6px);background:rgba(255,255,255,.1)}
-    .stat-num{font-family:'Rubik',sans-serif;font-weight:900;font-size:2.8rem;background:linear-gradient(135deg,var(--pink),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
-    .stat-lbl{margin-top:8px;font-size:1rem;color:rgba(255,255,255,.7);font-weight:500}
-
-    /* CONTACT */
-    .contact-section{background:linear-gradient(160deg,#1e1b2e,#2d1b4e 50%,#1e1b2e);padding:80px 20px;color:#fff;position:relative;overflow:hidden}
-    .contact-inner{max-width:640px;margin:0 auto;position:relative;z-index:1}
-    .contact-section .stitle h2{color:#fff}
-    .contact-section .stitle p{color:rgba(255,255,255,.6)}
-    .contact-form{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-lg);padding:36px;margin-top:40px;backdrop-filter:blur(16px)}
-    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .form-group{margin-bottom:20px}
-    .form-group label{display:block;font-weight:600;margin-bottom:8px;font-size:.9rem;color:rgba(255,255,255,.85)}
-    .form-group input,.form-group textarea,.form-group select{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:14px 18px;color:#fff;font-family:'Heebo',sans-serif;font-size:1rem;outline:none;transition:border-color .3s,background .3s,box-shadow .3s;direction:rtl}
-    .form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,.35)}
-    .form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--pink);background:rgba(255,255,255,.12);box-shadow:0 0 0 3px rgba(219,39,119,.15)}
-    .form-group select option{color:var(--dark);background:#fff}
-    .form-group textarea{resize:vertical;min-height:100px}
-    .form-submit{width:100%;background:linear-gradient(135deg,var(--pink-dark),var(--purple));color:#fff;border:none;padding:17px;border-radius:50px;font-family:'Heebo',sans-serif;font-weight:700;font-size:1.1rem;cursor:pointer;box-shadow:0 6px 25px rgba(219,39,119,.4);transition:transform .3s,box-shadow .3s;margin-top:8px;position:relative;overflow:hidden}
-    .form-submit::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);transition:left .5s}
-    .form-submit:hover::before{left:100%}
-    .form-submit:hover{transform:translateY(-2px);box-shadow:0 10px 35px rgba(219,39,119,.5)}
-    .form-success{display:none;text-align:center;padding:28px;background:rgba(37,211,102,.12);border-radius:var(--radius);border:1px solid rgba(37,211,102,.25);color:#4ade80;font-weight:700;font-size:1.15rem}
-    .contact-buttons{display:flex;gap:16px;justify-content:center;margin-top:36px;flex-wrap:wrap}
-    .contact-btn{display:flex;align-items:center;gap:10px;padding:15px 30px;border-radius:50px;text-decoration:none;font-weight:700;font-size:1rem;transition:transform .3s,box-shadow .3s}
-    .contact-btn:hover{transform:translateY(-3px) scale(1.03)}
-    .contact-btn.phone{background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;box-shadow:0 6px 25px rgba(2,132,199,.4)}
-    .contact-btn.whatsapp{background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;box-shadow:0 6px 25px rgba(37,211,102,.4)}
-
-    /* FOOTER */
-    footer{background:#0d0b15;color:rgba(255,255,255,.35);text-align:center;padding:36px 24px 28px;font-size:.85rem;border-top:1px solid rgba(255,255,255,.06)}
-    footer p+p{margin-top:6px}
-    footer a{color:var(--pink);text-decoration:none}
-
-    /* FLOATING WA */
-    .float-wa{position:fixed;bottom:28px;left:28px;width:62px;height:62px;background:linear-gradient(135deg,#25d366,#128c7e);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 25px rgba(37,211,102,.5);text-decoration:none;z-index:99;animation:bounce 2s infinite;transition:transform .2s}
-    .float-wa:hover{transform:scale(1.1)}
-    .float-wa svg{width:30px;height:30px;fill:#fff}
-
-    /* ANIMATIONS */
-    .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.25,.46,.45,.94),transform .8s cubic-bezier(.25,.46,.45,.94)}
-    .reveal.visible{opacity:1;transform:translateY(0)}
-    .reveal-scale{opacity:0;transform:scale(.85);transition:opacity .8s cubic-bezier(.25,.46,.45,.94),transform .8s cubic-bezier(.25,.46,.45,.94)}
-    .reveal-scale.visible{opacity:1;transform:scale(1)}
-    .stagger > *:nth-child(1){transition-delay:0s}
-    .stagger > *:nth-child(2){transition-delay:.1s}
-    .stagger > *:nth-child(3){transition-delay:.2s}
-    .stagger > *:nth-child(4){transition-delay:.25s}
-    .stagger > *:nth-child(5){transition-delay:.3s}
-    .stagger > *:nth-child(6){transition-delay:.35s}
-
-    /* RESPONSIVE */
-    @media(max-width:768px){
-      .nav-links{display:none}.hamburger{display:flex}
-      .nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(255,255,255,.98);backdrop-filter:blur(20px);padding:20px;gap:16px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
-      .photo-strip{grid-template-columns:repeat(2,1fr)}.ps-item:nth-child(3){display:none}.ps-item:nth-child(2){margin-top:0}
-      .srv-grid{grid-template-columns:1fr}
-      .gal-grid{grid-template-columns:1fr}.gal-item.span2{grid-column:span 1}
-      .form-row{grid-template-columns:1fr}.contact-form{padding:24px 18px}
-      .trust-bar{gap:20px}.trust-item{font-size:.85rem}
-      .stats-grid{grid-template-columns:repeat(2,1fr);gap:16px}.stat-num{font-size:2.2rem}
-    }
-    @media(max-width:480px){.hero{padding:100px 18px 60px}.hero h1{font-size:2.4rem}.nav-phone span{display:none}}
-  </style>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
+<!-- SVG Animations (hidden sprite) -->
+<div style="display:none">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <symbol id="anim-sugar" viewBox="0 0 80 80">
+      <rect x="28" y="45" width="24" height="28" rx="3" fill="#e0e0e0" stroke="#bbb" stroke-width="1.5"/>
+      <rect x="32" y="50" width="16" height="10" rx="2" fill="#fff" stroke="#ddd" stroke-width="1"/>
+      <circle cx="40" cy="55" r="3" fill="#f9a8d4" opacity=".6"><animate attributeName="r" values="3;4;3" dur="1.2s" repeatCount="indefinite"/></circle>
+      <line x1="40" y1="45" x2="40" y2="30" stroke="#999" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="34" cy="22" r="8" fill="#f9a8d4" opacity=".85"><animate attributeName="r" values="8;9;8" dur="2s" repeatCount="indefinite"/></circle>
+      <circle cx="44" cy="20" r="9" fill="#fbcfe8" opacity=".8"><animate attributeName="r" values="9;10.5;9" dur="2.5s" repeatCount="indefinite"/></circle>
+      <circle cx="38" cy="14" r="7" fill="#f472b6" opacity=".6"><animate attributeName="r" values="7;8.5;7" dur="1.8s" repeatCount="indefinite"/><animate attributeName="cy" values="14;12;14" dur="2s" repeatCount="indefinite"/></circle>
+      <circle cx="46" cy="28" r="5" fill="#fce7f3" opacity=".7"><animate attributeName="r" values="5;6;5" dur="2.2s" repeatCount="indefinite"/></circle>
+      <circle cx="40" cy="55" r="6" fill="none" stroke="#f9a8d4" stroke-width="1" stroke-dasharray="3 3"><animateTransform attributeName="transform" type="rotate" from="0 40 55" to="360 40 55" dur="2s" repeatCount="indefinite"/></circle>
+    </symbol>
+    <symbol id="anim-popcorn" viewBox="0 0 80 80">
+      <rect x="22" y="35" width="36" height="35" rx="4" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5"/>
+      <rect x="26" y="38" width="28" height="20" rx="2" fill="#fef3c7" stroke="#fbbf24" stroke-width="1"/>
+      <rect x="28" y="40" width="24" height="16" rx="1" fill="#fffbeb" opacity=".7"/>
+      <circle cx="34" cy="50" r="3" fill="#fbbf24"><animate attributeName="cy" values="50;38;50" dur="1.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;1;0.3" dur="1.5s" repeatCount="indefinite"/></circle>
+      <circle cx="42" cy="48" r="2.5" fill="#fcd34d"><animate attributeName="cy" values="48;36;48" dur="1.8s" repeatCount="indefinite" begin="0.3s"/><animate attributeName="opacity" values="1;1;0.3" dur="1.8s" repeatCount="indefinite" begin="0.3s"/></circle>
+      <circle cx="38" cy="52" r="2" fill="#fde68a"><animate attributeName="cy" values="52;40;52" dur="1.3s" repeatCount="indefinite" begin="0.6s"/><animate attributeName="opacity" values="1;1;0.3" dur="1.3s" repeatCount="indefinite" begin="0.6s"/></circle>
+      <circle cx="46" cy="46" r="2.8" fill="#fbbf24"><animate attributeName="cy" values="46;34;46" dur="1.6s" repeatCount="indefinite" begin="0.9s"/><animate attributeName="opacity" values="1;1;0.3" dur="1.6s" repeatCount="indefinite" begin="0.9s"/></circle>
+      <rect x="20" y="32" width="40" height="5" rx="2" fill="#dc2626" stroke="#b91c1c" stroke-width="1"/>
+      <rect x="36" y="26" width="8" height="8" rx="4" fill="#dc2626" stroke="#b91c1c" stroke-width="1"/>
+      <line x1="28" y1="70" x2="28" y2="76" stroke="#b91c1c" stroke-width="2" stroke-linecap="round"/>
+      <line x1="52" y1="70" x2="52" y2="76" stroke="#b91c1c" stroke-width="2" stroke-linecap="round"/>
+      <path d="M35 28 Q33 22 36 18" fill="none" stroke="#e5e7eb" stroke-width="1.5" opacity=".5" stroke-linecap="round"><animate attributeName="opacity" values="0.5;0.2;0.5" dur="2s" repeatCount="indefinite"/><animate attributeName="d" values="M35 28 Q33 22 36 18;M35 28 Q37 22 34 16;M35 28 Q33 22 36 18" dur="3s" repeatCount="indefinite"/></path>
+      <path d="M44 28 Q46 22 43 16" fill="none" stroke="#e5e7eb" stroke-width="1.5" opacity=".4" stroke-linecap="round"><animate attributeName="opacity" values="0.4;0.15;0.4" dur="2.5s" repeatCount="indefinite"/></path>
+    </symbol>
+    <symbol id="anim-slush" viewBox="0 0 80 80">
+      <rect x="18" y="20" width="44" height="40" rx="5" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1.5"/>
+      <rect x="22" y="24" width="16" height="28" rx="3" fill="#38bdf8" opacity=".4"/>
+      <rect x="42" y="24" width="16" height="28" rx="3" fill="#c084fc" opacity=".4"/>
+      <circle cx="30" cy="38" r="5" fill="none" stroke="#0ea5e9" stroke-width="1.5" stroke-dasharray="4 3"><animateTransform attributeName="transform" type="rotate" from="0 30 38" to="360 30 38" dur="3s" repeatCount="indefinite"/></circle>
+      <circle cx="50" cy="38" r="5" fill="none" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="4 3"><animateTransform attributeName="transform" type="rotate" from="0 50 38" to="-360 50 38" dur="3s" repeatCount="indefinite"/></circle>
+      <rect x="28" y="60" width="4" height="6" rx="1" fill="#94a3b8"/>
+      <rect x="48" y="60" width="4" height="6" rx="1" fill="#94a3b8"/>
+      <circle cx="30" cy="68" r="1.5" fill="#0ea5e9"><animate attributeName="cy" values="66;74;66" dur="1.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0;1" dur="1.8s" repeatCount="indefinite"/></circle>
+      <circle cx="50" cy="68" r="1.5" fill="#a855f7"><animate attributeName="cy" values="66;74;66" dur="2s" repeatCount="indefinite" begin="0.5s"/><animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite" begin="0.5s"/></circle>
+      <rect x="16" y="16" width="48" height="6" rx="3" fill="#bae6fd" stroke="#7dd3fc" stroke-width="1"/>
+      <text x="26" y="34" font-size="6" fill="#fff" opacity=".7">*</text>
+      <text x="46" y="34" font-size="6" fill="#fff" opacity=".7">*</text>
+    </symbol>
+    <symbol id="anim-facepaint" viewBox="0 0 80 80">
+      <circle cx="40" cy="38" r="22" fill="#fef3c7" stroke="#fbbf24" stroke-width="1.5"/>
+      <circle cx="33" cy="34" r="2.5" fill="#1e1b2e"/>
+      <circle cx="47" cy="34" r="2.5" fill="#1e1b2e"/>
+      <path d="M32 44 Q40 52 48 44" fill="none" stroke="#1e1b2e" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M22 30 Q16 22 24 18 Q30 22 28 30" fill="#f472b6" opacity=".7"><animate attributeName="opacity" values=".7;.9;.7" dur="2s" repeatCount="indefinite"/></path>
+      <path d="M58 30 Q64 22 56 18 Q50 22 52 30" fill="#a855f7" opacity=".7"><animate attributeName="opacity" values=".7;.9;.7" dur="2s" repeatCount="indefinite" begin="0.3s"/></path>
+      <polygon points="33,42 34,44 36,44 34.5,45.5 35,47.5 33,46 31,47.5 31.5,45.5 30,44 32,44" fill="#fbbf24" opacity=".8"><animate attributeName="opacity" values=".8;1;.8" dur="1.5s" repeatCount="indefinite"/></polygon>
+      <polygon points="47,42 48,44 50,44 48.5,45.5 49,47.5 47,46 45,47.5 45.5,45.5 44,44 46,44" fill="#38bdf8" opacity=".8"><animate attributeName="opacity" values=".8;1;.8" dur="1.5s" repeatCount="indefinite" begin="0.5s"/></polygon>
+      <line x1="58" y1="55" x2="68" y2="68" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
+      <ellipse cx="56" cy="53" rx="4" ry="2.5" fill="#f472b6" transform="rotate(-40 56 53)"/>
+      <path d="M52 50 Q48 56 44 54" fill="none" stroke="#f472b6" stroke-width="2" stroke-linecap="round" stroke-dasharray="20" stroke-dashoffset="20"><animate attributeName="stroke-dashoffset" values="20;0;20" dur="3s" repeatCount="indefinite"/></path>
+    </symbol>
+  </svg>
+</div>
+
+<!-- NAV -->
 <nav id="navbar">
   <a href="#" class="nav-logo">
-    <svg viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#db2777"/><stop offset="50%" style="stop-color:#a855f7"/><stop offset="100%" style="stop-color:#0284c7"/></linearGradient>
         <linearGradient id="lg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#fbbf24"/><stop offset="100%" style="stop-color:#f472b6"/></linearGradient>
@@ -203,36 +82,49 @@
       <path d="M18 4l4.5 9.5L33 15l-8 7.5L27 33l-9-5-9 5 2-10.5L3 15l10.5-1.5z" fill="url(#lg2)" opacity=".9"/>
       <ellipse cx="42" cy="16" rx="8" ry="10" fill="url(#lg1)" opacity=".7"/>
       <path d="M42 26Q42 32 40 38" stroke="url(#lg1)" stroke-width="1.5" fill="none" opacity=".5"/>
-      <text x="56" y="34" font-family="Rubik,sans-serif" font-weight="900" font-size="28" fill="url(#lg1)">אסתי</text>
-      <text x="120" y="34" font-family="Heebo,sans-serif" font-weight="400" font-size="16" fill="#6b7280">אירועים</text>
+      <text x="150" y="36" font-family="Rubik,sans-serif" font-weight="900" font-size="28" fill="url(#lg1)" text-anchor="end" direction="rtl">אסתי</text>
+      <text x="160" y="36" font-family="Heebo,sans-serif" font-weight="400" font-size="17" fill="#6b7280">אירועים</text>
     </svg>
   </a>
   <div class="nav-links" id="navLinks">
     <a href="#services" class="nav-link">שירותים</a>
     <a href="#gallery" class="nav-link">גלריה</a>
     <a href="#contact" class="nav-link">צרו קשר</a>
-    <a href="tel:0526398416" class="nav-phone"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>052-6398416</span></a>
+    <a href="tel:0526398416" class="nav-phone">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span>052-6398416</span>
+    </a>
   </div>
   <button class="hamburger" id="hamburger" aria-label="תפריט"><span></span><span></span><span></span></button>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
   <div class="hero-blob hero-blob-1"></div>
   <div class="hero-blob hero-blob-2"></div>
   <div class="hero-blob hero-blob-3"></div>
-  <div class="hero-deco hero-deco-1">🎈</div>
-  <div class="hero-deco hero-deco-2">🎨</div>
-  <div class="hero-deco hero-deco-3">🍿</div>
-  <div class="hero-deco hero-deco-4">✨</div>
+  <!-- Animated SVG decorations -->
+  <div class="hero-deco hero-deco-1"><svg><use href="#anim-sugar"/></svg></div>
+  <div class="hero-deco hero-deco-2"><svg><use href="#anim-facepaint"/></svg></div>
+  <div class="hero-deco hero-deco-3"><svg><use href="#anim-popcorn"/></svg></div>
+  <div class="hero-deco hero-deco-4"><svg><use href="#anim-slush"/></svg></div>
+
   <div class="hero-badge">🎉 האירוע שהילדים לא ישכחו</div>
-  <h1>כי כל ילד<br/><span>מגיע לחגוג</span></h1>
+  <h1>כי לכל ילד<br/><span>מגיע לחגוג</span></h1>
   <p class="hero-sub">עמדות מזון, ציורי פנים, סדנת תכשיטים ועמדות צילום מרהיבות — הכול באירוע אחד, עם חיוך אחד גדול</p>
   <div class="hero-ctas">
-    <a href="#contact" class="btn-primary"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>השאירו פרטים</a>
-    <a href="https://wa.me/972526398416" target="_blank" class="btn-wa"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>וואטסאפ</a>
+    <a href="#contact" class="btn-primary">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      השאירו פרטים
+    </a>
+    <a href="https://wa.me/972526398416" target="_blank" class="btn-wa">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      וואטסאפ
+    </a>
   </div>
 </section>
 
+<!-- TRUST BAR -->
 <div class="trust-bar reveal">
   <div class="trust-item"><div class="trust-icon pk">🎉</div><span>מאות אירועים מוצלחים</span></div>
   <div class="trust-item"><div class="trust-icon bl">👨‍👩‍👧‍👦</div><span>מתאים לכל הגילאים</span></div>
@@ -240,12 +132,14 @@
   <div class="trust-item"><div class="trust-icon pr">🚚</div><span>הגעה עד אליכם</span></div>
 </div>
 
+<!-- PHOTO STRIP -->
 <div class="photo-strip">
   <div class="ps-item reveal"><img src="images/party-setup.jpg" alt="עמדת צילום לאירוע" loading="lazy"/><div class="ps-label">עמדת צילום מעוצבת</div></div>
   <div class="ps-item reveal"><img src="images/food-stand.jpg" alt="עמדות מזון" loading="lazy"/><div class="ps-label">עמדות מזון לאירועים</div></div>
   <div class="ps-item reveal"><img src="images/face-paint.jpg" alt="ציורי פנים" loading="lazy"/><div class="ps-label">ציורי פנים מקצועיים</div></div>
 </div>
 
+<!-- SERVICES -->
 <section class="services" id="services">
   <div class="stitle reveal"><h2>מה <span>אנחנו מביאים</span> לאירוע שלכם?</h2><p>חבילה מלאה או שירות בודד — בדיוק לפי הצורך שלכם</p><div class="tline"></div></div>
   <div class="srv-grid stagger">
@@ -258,6 +152,7 @@
   </div>
 </section>
 
+<!-- EVENTS -->
 <section class="events-section">
   <div class="stitle reveal"><h2>מתאים לכל <span>סוג אירוע</span></h2><p>מגיעים אליכם עם הכול — מוכנים, מחייכים ומלאי אנרגיה</p><div class="tline"></div></div>
   <div class="events-chips stagger">
@@ -270,6 +165,7 @@
   </div>
 </section>
 
+<!-- GALLERY -->
 <section class="gallery-section" id="gallery">
   <div class="stitle reveal"><h2>רגעים <span>מהאירועים</span> שלנו</h2><p>כל אירוע הוא חגיגה — הנה כמה רגעי קסם</p><div class="tline"></div></div>
   <div class="gal-grid stagger">
@@ -284,15 +180,7 @@
   </div>
 </section>
 
-<section class="stats-section">
-  <div class="stats-grid stagger">
-    <div class="stat-card reveal"><div class="stat-num">500+</div><div class="stat-lbl">אירועים מוצלחים</div></div>
-    <div class="stat-card reveal"><div class="stat-num">10,000+</div><div class="stat-lbl">ילדים שמחים</div></div>
-    <div class="stat-card reveal"><div class="stat-num">6</div><div class="stat-lbl">סוגי שירותים</div></div>
-    <div class="stat-card reveal"><div class="stat-num">100%</div><div class="stat-lbl">שביעות רצון</div></div>
-  </div>
-</section>
-
+<!-- CONTACT -->
 <section class="contact-section" id="contact">
   <div class="contact-inner">
     <div class="stitle reveal"><h2 style="color:#fff">בואו <span>נדבר!</span></h2><p>השאירו פרטים ואסתי תחזור אליכם בהקדם</p><div class="tline"></div></div>
@@ -318,52 +206,17 @@
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
   <p>© 2025 אסתי אירועים | עמדות מזון, ציורי פנים וסדנאות לכל אירוע</p>
   <p>עם ❤️ לכל ילד וילדה</p>
 </footer>
 
+<!-- FLOATING WA -->
 <a href="https://wa.me/972526398416" target="_blank" class="float-wa" title="שלחו הודעה בוואטסאפ">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
-<script>
-  // Scroll reveal
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal,.reveal-scale').forEach(el => obs.observe(el));
-
-  // Navbar scroll effect
-  window.addEventListener('scroll', () => {
-    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
-  });
-
-  // Hamburger menu
-  document.getElementById('hamburger').addEventListener('click', () => {
-    document.getElementById('navLinks').classList.toggle('open');
-  });
-
-  // Close mobile menu on link click
-  document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
-  });
-
-  // Form handling
-  const form = document.getElementById('contactForm');
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = form.querySelector('.form-submit');
-      btn.textContent = 'שולח...';
-      btn.disabled = true;
-      try {
-        const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
-        if (res.ok) { form.style.display = 'none'; document.getElementById('formSuccess').style.display = 'block'; }
-        else { btn.textContent = 'שגיאה, נסו שוב'; btn.disabled = false; }
-      } catch { btn.textContent = 'שגיאה, נסו שוב'; btn.disabled = false; }
-    });
-  }
-</script>
+<script src="js/main.js"></script>
 </body>
 </html>
