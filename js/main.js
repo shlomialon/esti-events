@@ -22,7 +22,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
   link.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
 });
 
-// Form handling
+// Form handling (FormSubmit.co)
 const form = document.getElementById('contactForm');
 if (form) {
   form.addEventListener('submit', async (e) => {
@@ -40,12 +40,14 @@ if (form) {
         form.style.display = 'none';
         document.getElementById('formSuccess').style.display = 'block';
       } else {
-        btn.textContent = 'שגיאה, נסו שוב';
+        btn.textContent = '📩 שלחו הודעה';
         btn.disabled = false;
+        alert('שגיאה בשליחה, נסו שוב');
       }
     } catch {
-      btn.textContent = 'שגיאה, נסו שוב';
+      btn.textContent = '📩 שלחו הודעה';
       btn.disabled = false;
+      alert('שגיאה בשליחה, נסו שוב');
     }
   });
 }
